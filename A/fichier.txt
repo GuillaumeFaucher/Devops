@@ -1,1 +1,20 @@
 
+
+
+#Commande création d'image
+root@ip-172-31-29-135:~/dockerfile# docker build -t tgb/homecolis-api:latest .
+
+docker run --rm -ti -p  8080:80 -t homecolis-api:latest
+ Devops/A/Dockerfile
+
+
+
+error
+[WARNING]: Empty continuation line found in:
+    RUN       sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list &&       apt-get update &&       apt-get -y upgrade &&       apt-get -y install apt-utils &&       apt-get install -y build-essential &&       apt-get install -y software-properties-common &&       apt-get install -y byobu curl git htop man unzip vim wget nano &&       rm -rf /var/lib/apt/lists/* &&       apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10 &&       echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | tee -a /etc/apt/sources.list.d/10gen.list &&       apt-get update &&       apt-get -y install mongodb-10gen
+[WARNING]: Empty continuation lines will become errors in a future release.
+
+but :
+Successfully built 49291ca0eeba
+Successfully tagged tgb/homecolis-api:latest
+root@ip-172-31-29-135:~/dockerfile#
