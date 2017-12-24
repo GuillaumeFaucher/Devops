@@ -1,49 +1,27 @@
 
-# Ubuntu Dockerfile
+#IMAGE TO PULL 
+FROM ubuntu:latest
 
-# Team TGB
+MAINTAINER TGB
 
-# Pull base image
-FROM ubuntu
+#COMMANDE A EXECUTER
+RUN mkdir -p /usr/src/app
 
-MAINTAINER tgb
+#Repertoire
+COPY ./API/app.js /usr/src/app/
+COPY ./API/package-lock.json /usr/src/app/
+COPY ./API/package.json /usr/src/app/
+COPY docker-entrypoint.sh /
 
-# Installation
-RUN \
-      sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
-      apt-get update && \
-      apt-get -y upgrade && \
-      apt-get -y install apt-utils && \
-      apt-get install -y build-essential && \
-      apt-get install -y software-properties-common && \
-      apt-get install -y curl git  unzip wget nano && \
-      rm -rf /var/lib/apt/lists/* && \
+#Repertoire de travail 
+WORKDIR /usr/src/app/
 
-      apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10 && \
-      echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | tee -a /etc/apt/sources.list.d/10gen.list && \
-      apt-get update && \
-      apt-get -y install mongodb-10gen
+#COMMANDE A EXECUTER
+RUN \ 
+		apt-get update && \
+		apt-get install -y curl && \
+		curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -&& \
+		apt-get install -y nodejs && \
+		npm i
 
-
-# Variable d'environnement
-  ENV HOME /root
-
-# WorkDirectory
-  WORKDIR /root
-
-# Commande par défault
-  CMD ["bash"]
-
-
-#RUN echo "" >> /etc/mongodb.conf
-
-  CMD ["/usr/bin/mongod", "--config", "/etc/mongodb.conf"]
-
-# commande node js
-
-
-
-# Les ports exposés
-  EXPOSE 8080 27017
-
-# les volumes
+ENTRYPOINT ["/docker-entrypoint.sh"]
