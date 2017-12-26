@@ -1,2 +1,6 @@
-- host :
-     
+---
+- hosts: mongo
+  remote_user: root
+  gather_facts: yes
+  roles:
+    - greendayonfire.mongodb
